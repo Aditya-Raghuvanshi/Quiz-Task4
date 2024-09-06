@@ -1,24 +1,54 @@
-import logo from './logo.svg';
+import { Provider } from 'react-redux';
 import './App.css';
+import Login from './components/Login';
+import store from './utils/store';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import MainPage from './components/MainPage';
+import MainContainer from './components/MainContainer';
+import CreateQuiz from './components/CreateQuiz';
+import DisplayQuestions from './components/DisplayQuestions';
+import StartTest from './components/StartTest';
+import Evaluate from './components/Evaluate';
 
 function App() {
+  const appRouter = createBrowserRouter([
+    {
+      path:"/",
+      element:<MainPage/>,
+      children:[
+        {
+          path:"/",
+          element:<Login/>,
+        },
+        {
+          path:"/maincontainer",
+          element:<MainContainer/>,
+        },
+        {
+          path:"/createquiz",
+          element:<CreateQuiz/>,
+        },
+        {
+          path:"/createquiz/seequestions",
+          element:<DisplayQuestions/>,
+        },
+        {
+          path:"/starttest/:id",
+          element:<StartTest/>,
+        },
+        {
+          path:"/evaluate/:id",
+          element:<Evaluate/>,
+        }
+      ]
+    },
+  ])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Provider store={store}>
+    <div className="App text-3xl">
+      <RouterProvider router={appRouter}/>
     </div>
+    </Provider>
   );
 }
 
